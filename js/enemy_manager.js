@@ -22,7 +22,7 @@
      onActivateEvent() {
          this.timer = me.timer.setInterval(() => {
              const bounds = this.childBounds;
-             const ALIEN_SPEED = window.state.alienSpeed;
+             const ALIEN_SPEED = window.state.alienSpeed * 0.2;
 
              if ((this.vel > 0 && (bounds.right + this.vel) >= me.game.viewport.width) ||
                  (this.vel < 0 && (bounds.left + this.vel) <= 0)) {
@@ -31,15 +31,15 @@
                  this.pos.y += 16 * ALIEN_SPEED;
 
                  if (this.vel > 0) {
-                     this.vel += 5;
+                     this.vel += 3;
                  } else {
-                     this.vel -= 5;
+                     this.vel -= 3;
                  }
                 game[`level${window.state.level}`].checkIfLoss(bounds.bottom);
              } else {
-                 this.pos.x += this.vel * ALIEN_SPEED;
+                 this.pos.x += this.vel * (ALIEN_SPEED * 0.05);
              }
-         }, 1000);
+         }, 8);
      }
 
      onDeactivateEvent() {

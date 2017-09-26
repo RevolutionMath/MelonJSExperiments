@@ -46,8 +46,8 @@ const game = {
         me.state.LEVEL_3 = me.state.USER + 5;
         // set the "Play/Ingame" Screen Object
         this.level1 = new game.PlayScreen();
-        this.level2 = new game.PlayScreen(3, 'teal');
-        this.level3 = new game.PlayScreen(5, 'orange');
+        this.level2 = new game.PlayScreen(2, 'teal');
+        this.level3 = new game.PlayScreen(3, 'orange');
 
         this.winScreen = new game.WinScreen();
         this.loseScreen = new game.LoseScreen();

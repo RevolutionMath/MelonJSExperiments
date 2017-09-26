@@ -1,20 +1,28 @@
 class PlayScreen extends me.ScreenObject {
+    init(alienSpeed = 1, color = 'black') {
+        this.alienSpeed = alienSpeed;
+        this.color = color;
+    }
+
     checkIfLoss(y) {
         if (y >= this.player.pos.y) {
-            me.state.change(me.state.isCurrent(me.state.PLAY) ? me.state.WIN : me.state.PLAY);
+            me.state.change(me.state.LOSE);
         }
     }
 
     onResetEvent() {
-        me.game.world.addChild(new me.ColorLayer('background', '#000'), 0);
+        window.state.alienSpeed = this.alienSpeed;
+
+        this.colorLayer = new me.ColorLayer('background', this.color);
+
+        me.game.world.addChild(this.colorLayer, 0);
 
         this.player = me.pool.pull('player');
 
         me.game.world.addChild(this.player, 1);
 
-        game.scoreCard = new ScoreCard(0);
-
-        me.game.world.addChild(game.scoreCard);
+        this.scoreCard = new game.ScoreCard(window.state.level, window.state.score, window.state.alienSpeed);
+        me.game.world.addChild(this.scoreCard);
         // me.game.world.addChild(new myButton(10,10));
 
         this.enemyManager = new game.EnemyManager();
@@ -39,6 +47,9 @@ class PlayScreen extends me.ScreenObject {
         me.input.unbindKey(me.input.KEY.SPACE);
 
         me.game.world.removeChild(this.player);
+        me.game.world.removeChild(this.colorLayer);
+        me.game.world.removeChild(this.enemyManager);
+        me.game.world.removeChild(this.scoreCard);
     }
 }
 

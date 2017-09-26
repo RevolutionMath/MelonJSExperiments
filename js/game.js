@@ -33,14 +33,34 @@ const game = {
         me.pool.register('enemy', game.Enemy);
         me.pool.register('laser', game.Laser);
 
-        // set the "Play/Ingame" Screen Object
-        this.playScreen = new game.PlayScreen();
-        this.winScreen = new game.WinScreen();
+        window.state = {
+            level: 1,
+            score: 0,
+            alienSpeed: 1,
+        }
 
-        me.state.set(me.state.PLAY, this.playScreen);
+        me.state.WIN = me.state.USER + 1;
+        me.state.LOSE = me.state.USER + 2;
+        me.state.LEVEL_1 = me.state.USER + 3;
+        me.state.LEVEL_2 = me.state.USER + 4;
+        me.state.LEVEL_3 = me.state.USER + 5;
+        // set the "Play/Ingame" Screen Object
+        this.level1 = new game.PlayScreen();
+        this.level2 = new game.PlayScreen(3, 'teal');
+        this.level3 = new game.PlayScreen(5, 'orange');
+
+        this.winScreen = new game.WinScreen();
+        this.loseScreen = new game.LoseScreen();
+
+        me.state.set(me.state.LEVEL_1, this.level1);
+        me.state.set(me.state.LEVEL_2, this.level2);
+        me.state.set(me.state.LEVEL_3, this.level3);
+
         me.state.set(me.state.WIN, this.winScreen);
+        me.state.set(me.state.LOSE, this.loseScreen);
+
 
         // start the game
-        me.state.change(me.state.PLAY);
+        me.state.change(me.state.LEVEL_1);
     },
 };

@@ -17,7 +17,6 @@ var myButton = me.GUI_Object.extend(
        // when the object is clicked
        onClick:function (event)
        {
-          console.log("clicked!");
           // don't propagate the event
           return false;
        }

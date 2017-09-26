@@ -22,24 +22,22 @@
      onActivateEvent() {
          this.timer = me.timer.setInterval(() => {
              const bounds = this.childBounds;
-             const LEVEL_AMP = me.state.isCurrent(me.state.WIN) ?
-                 3 :
-                 2;
+             const ALIEN_SPEED = window.state.alienSpeed;
 
              if ((this.vel > 0 && (bounds.right + this.vel) >= me.game.viewport.width) ||
                  (this.vel < 0 && (bounds.left + this.vel) <= 0)) {
 
                  this.vel *= -1;
-                 this.pos.y += 16 * LEVEL_AMP;
+                 this.pos.y += 16 * ALIEN_SPEED;
 
                  if (this.vel > 0) {
                      this.vel += 5;
                  } else {
                      this.vel -= 5;
                  }
-                 game[me.state.WIN ? 'winScreen' : 'playScreen'].checkIfLoss(bounds.bottom);
+                game[`level${window.state.level}`].checkIfLoss(bounds.bottom);
              } else {
-                 this.pos.x += this.vel * LEVEL_AMP;
+                 this.pos.x += this.vel * ALIEN_SPEED;
              }
          }, 1000);
      }
@@ -54,8 +52,13 @@
      }
 
      update(dt) {
-         if (this.children.length === 0 && this.createdEnemies) {
-             me.state.change(me.state.isCurrent(me.state.PLAY) ? me.state.WIN : me.state.PLAY);
+         if (this.children.length === 1 && this.createdEnemies) {
+            if (window.state.level < 3) {
+                window.state.level += 1
+                me.state.change(me.state[`LEVEL_${window.state.level}`]);
+            } else {
+                me.state.change(me.state.WIN);
+            }
          }
 
          this._super(me.Container, 'update', [dt]);

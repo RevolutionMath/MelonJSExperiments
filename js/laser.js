@@ -42,9 +42,12 @@ class Laser extends me.Entity {
 
     onCollision(res, other) {
         if (other.body.collisionType === me.collision.types.ENEMY_OBJECT) {
-            game.scoreCard.score += 1;
+            window.state.score += 1;
+
             me.game.world.removeChild(this);
-            game[me.state.isCurrent(me.state.WIN) ? 'winScreen' : 'playScreen'].enemyManager.removeChild(other);
+
+            game[`level${window.  state.level}`].scoreCard.score = window.state.score;
+            game[`level${window.state.level}`].enemyManager.removeChild(other);
             return false;
         }
     }

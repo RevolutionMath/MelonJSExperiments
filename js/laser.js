@@ -46,7 +46,7 @@ class Laser extends me.Entity {
 
             me.game.world.removeChild(this);
 
-            game[`level${window.  state.level}`].scoreCard.score = window.state.score;
+            game[`level${window.state.level}`].scoreCard.score = window.state.score;
             game[`level${window.state.level}`].enemyManager.removeChild(other);
             return false;
         }

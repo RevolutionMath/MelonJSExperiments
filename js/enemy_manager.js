@@ -53,8 +53,9 @@
 
      update(dt) {
          if (this.children.length === 1 && this.createdEnemies) {
-            if (window.state.level < 3) {
-                window.state.level += 1
+            window.state.level += 1
+
+            if (window.state.level <= 3) {
                 me.state.change(me.state[`LEVEL_${window.state.level}`]);
             } else {
                 me.state.change(me.state.WIN);

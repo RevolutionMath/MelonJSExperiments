@@ -6,7 +6,7 @@
          ]);
          this.COLS = 9;
          this.ROWS = 4;
-         this.vel = 16;
+         this.vel = 16 * (window.state.alienSpeed * 0.4);
      }
 
      createEnemies() {
@@ -22,24 +22,25 @@
      onActivateEvent() {
          this.timer = me.timer.setInterval(() => {
              const bounds = this.childBounds;
-             const ALIEN_SPEED = window.state.alienSpeed * 0.2;
+            //  const ALIEN_SPEED = window.state.alienSpeed * 0.2;
 
              if ((this.vel > 0 && (bounds.right + this.vel) >= me.game.viewport.width) ||
                  (this.vel < 0 && (bounds.left + this.vel) <= 0)) {
 
                  this.vel *= -1;
-                 this.pos.y += 16 * ALIEN_SPEED;
+                 this.pos.y += 5;
+
 
                  if (this.vel > 0) {
-                     this.vel += 3;
+                     this.vel += 0.5;
                  } else {
-                     this.vel -= 3;
+                     this.vel -= 0.5;
                  }
                 game[`level${window.state.level}`].checkIfLoss(bounds.bottom);
              } else {
-                 this.pos.x += this.vel * (ALIEN_SPEED * 0.05);
+                 this.pos.x += (this.vel * 0.14);
              }
-         }, 8);
+         }, 20);
      }
 
      onDeactivateEvent() {
@@ -52,10 +53,10 @@
      }
 
      update(dt) {
-         if (this.children.length === 1 && this.createdEnemies) {
+         if (this.children.length === 0 && this.createdEnemies) {
             window.state.level += 1
 
-            if (window.state.level <= 3) {
+            if (window.state.level <= window.state.maxLevel) {
                 me.state.change(me.state[`LEVEL_${window.state.level}`]);
             } else {
                 me.state.change(me.state.WIN);

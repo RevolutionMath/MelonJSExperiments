@@ -33,13 +33,6 @@ const game = {
         me.pool.register('enemy', game.Enemy);
         me.pool.register('laser', game.Laser);
 
-        window.state = {
-            level: 1,
-            score: 0,
-            alienSpeed: 1,
-            maxLevel: 4,
-        }
-
         me.state.WIN = me.state.USER + 1;
         me.state.LOSE = me.state.USER + 2;
         me.state.LEVEL_1 = me.state.USER + 3;

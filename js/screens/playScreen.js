@@ -11,7 +11,7 @@ class PlayScreen extends me.ScreenObject {
     }
 
     onResetEvent() {
-        window.state.alienSpeed = this.alienSpeed;
+        store.dispatch(actions.setAlienSpeed(this.alienSpeed));
 
         this.colorLayer = new me.ColorLayer('background', this.color);
 
@@ -21,7 +21,7 @@ class PlayScreen extends me.ScreenObject {
 
         me.game.world.addChild(this.player, 1);
 
-        this.scoreCard = new game.ScoreCard(window.state.level, window.state.score, window.state.alienSpeed);
+        this.scoreCard = new game.ScoreCard(store.getState().level, store.getState().score, store.getState().alienSpeed);
         me.game.world.addChild(this.scoreCard);
         // me.game.world.addChild(new myButton(10,10));
 

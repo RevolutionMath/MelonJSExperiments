@@ -6,7 +6,7 @@
          ]);
          this.COLS = 9;
          this.ROWS = 4;
-         this.vel = 16 * (window.state.alienSpeed * 0.4);
+         this.vel = 16 * (store.getState().alienSpeed * 0.4);
      }
 
      createEnemies() {
@@ -22,7 +22,7 @@
      onActivateEvent() {
          this.timer = me.timer.setInterval(() => {
              const bounds = this.childBounds;
-            //  const ALIEN_SPEED = window.state.alienSpeed * 0.2;
+            //  const ALIEN_SPEED = store.getState().alienSpeed * 0.2;
 
              if ((this.vel > 0 && (bounds.right + this.vel) >= me.game.viewport.width) ||
                  (this.vel < 0 && (bounds.left + this.vel) <= 0)) {
@@ -36,7 +36,7 @@
                  } else {
                      this.vel -= 0.5;
                  }
-                game[`level${window.state.level}`].checkIfLoss(bounds.bottom);
+                game[`level${store.getState().level}`].checkIfLoss(bounds.bottom);
              } else {
                  this.pos.x += (this.vel * 0.14);
              }
@@ -54,10 +54,10 @@
 
      update(dt) {
          if (this.children.length === 0 && this.createdEnemies) {
-            window.state.level += 1
+            store.dispatch(actions.incrementLevel());
 
-            if (window.state.level <= window.state.maxLevel) {
-                me.state.change(me.state[`LEVEL_${window.state.level}`]);
+            if (store.getState().level <= store.getState().maxLevel) {
+                me.state.change(me.state[`LEVEL_${store.getState().level}`]);
             } else {
                 me.state.change(me.state.WIN);
             }

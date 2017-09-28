@@ -58,6 +58,6 @@ const game = {
         me.state.set(me.state.LOSE, this.loseScreen);
 
         // start the game
-        me.state.change(me.state.LEVEL_1);
+        me.state.change(me.state[`LEVEL_${store.getState().level}`]);
     },
 };

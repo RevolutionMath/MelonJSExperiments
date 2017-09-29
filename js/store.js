@@ -4,6 +4,8 @@ const initState = {
     alienSpeed: 1,
     maxLevel: 4,
     player_pos: 0,
+    enemy_pos_x: 0,
+    enemy_pos_y: 40,
 }
 
 function mainReducer(state = initState, action) {
@@ -28,6 +30,11 @@ function mainReducer(state = initState, action) {
                 ...state,
                 player_pos: action.pos,
             };
+        case 'SET_ENEMY_POS':
+            return {
+                ...state,
+                [`enemy_pos_${action.axis}`]: action.pos,
+            };
         default:
             return state;
     }
@@ -35,7 +42,9 @@ function mainReducer(state = initState, action) {
 
 const store = Redux.createStore(
     mainReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({
+        maxAge: Infinity,
+    })
 );
 
 const actions = {
@@ -59,6 +68,13 @@ const actions = {
     setPlayerPos(pos) {
         return {
             type: 'SET_PLAYER_POS',
+            pos,
+        };
+    },
+    setEnemyPos(axis, pos) {
+        return {
+            type: 'SET_ENEMY_POS',
+            axis,
             pos,
         };
     },

@@ -21,13 +21,17 @@ class Player extends me.Sprite {
     update(dt) {
         this._super(me.Sprite, 'update', [dt]);
         if (me.input.isKeyPressed('left')) {
-            store.dispatch(actions.setPlayerPos(this.pos.x - this.velx * dt / 1000));
+            const newPos = this.pos.x - this.velx * dt / 1000;
+
+            if (newPos !== store.getState().player_pos) store.dispatch(actions.setPlayerPos(newPos));
         }
         if (me.input.isKeyPressed('right')) {
-            store.dispatch(actions.setPlayerPos(this.pos.x + this.velx * dt / 1000));
+            const newPos = this.pos.x + this.velx * dt / 1000;
+
+            if (newPos !== store.getState().player_pos) store.dispatch(actions.setPlayerPos(newPos));
         }
 
-        store.dispatch(actions.setPlayerPos(this.pos.x.clamp(0, this.maxX)));
+        // store.dispatch(actions.setPlayerPos(this.pos.x.clamp(0, this.maxX)));
 
         if (me.input.isKeyPressed('shoot')) {
             const {

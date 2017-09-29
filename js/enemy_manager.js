@@ -7,6 +7,11 @@
          this.COLS = 9;
          this.ROWS = 4;
          this.vel = 16 * (store.getState().alienSpeed * 0.4);
+
+         store.subscribe(() => {
+            this.pos.x = store.getState().enemy_pos_x;
+            this.pos.y = store.getState().enemy_pos_y;
+         });
      }
 
      createEnemies() {
@@ -28,8 +33,7 @@
                  (this.vel < 0 && (bounds.left + this.vel) <= 0)) {
 
                  this.vel *= -1;
-                 this.pos.y += 5;
-
+                 store.dispatch(actions.setEnemyPos('y', this.pos.y + 5))
 
                  if (this.vel > 0) {
                      this.vel += 0.5;
@@ -38,7 +42,7 @@
                  }
                 game[`level${store.getState().level}`].checkIfLoss(bounds.bottom);
              } else {
-                 this.pos.x += (this.vel * 0.14);
+                 store.dispatch(actions.setEnemyPos('x', this.pos.x + this.vel * 0.14))
              }
          }, 20);
      }
